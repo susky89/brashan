@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños Vrayan</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to top, #b3e5fc, white); /* Pastel blue gradient */
+      font-family: 'Arial', sans-serif;
+      overflow: hidden; /* Ensures confetti doesn't overflow */
+    }
+
+    h1 {
+      color: #007bb5;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    img {
+      max-width: 400px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f9f9f9;
+      border: 2px solid #007bb5;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: white;
+      background-color: #4caf50; /* Green button */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #007bb5;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+  <h1>Feliz Cumpleaños Vrayan!</h1>
+  <img src="https://i.pinimg.com/originals/83/45/62/83456270df9f77e514a30e628a229c2d.jpg" alt="Happy Birthday Image">
+  
+  <div class="input-container">
+    <p id="promptText">Inserta un número del 1 hasta tu edad actual:</p>
+    <input type="number" id="numberInput" placeholder="Escribe un número">
+    <button onclick="showPsalm()">start</button>
+  </div>
+
+  <script>
+    // Confetti Animation
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    const confettiCount = 150;
+    const confetti = [];
+    const colors = ['#FFCC00', '#FF5733', '#33FF57', '#3380FF', '#FF33F6'];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    for (let i = 0; i < confettiCount; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 7 + 3,
+        speedX: Math.random() * 2 - 1,
+        speedY: Math.random() * 2 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotationSpeed: Math.random() * 5,
+      });
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(particle => {
+        ctx.save();
+        ctx.translate(particle.x, particle.y);
+        ctx.rotate((particle.rotation * Math.PI) / 180);
+        ctx.fillStyle = particle.color;
+        ctx.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size);
+        ctx.restore();
+
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+        particle.rotation += particle.rotationSpeed;
+
+        if (particle.y > canvas.height) particle.y = -10;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.x < 0) particle.x = canvas.width;
+      });
+
+      requestAnimationFrame(drawConfetti);
+    }
+
+    drawConfetti();
+
+    // Psalms data
+    const psalms = {
+      1: "feliz cumpleaños brayaaan, i wish u da best, te quiero muuucho.",
+      2: "El destino no está decidido por las estrellas. Lo decidimos nosotros, con cada paso que damos.",
+      3: "No importa lo despacio que vayas, siempre y cuando no te detengas.",
+      4: "Salmo 34:10: Los leoncillos necesitan y tienen hambre, pero los que buscan a Jehová no tendrán falta de ningún bien.",
+      5: "El superior hombre es aquel que se ocupa de las virtudes, no de los placeres.",
+      6: "Salmo 37:5: Encomienda a Jehová tu camino, y confía en él; y él hará.",
+      7: "El hombre que mueve montañas comienza cargando pequeñas piedras.",
+      8: "siempre que te sientas mal, recuerda que yo estoy aqui para ayudarte en todo lo que este en mis manos",
+      9: "La vida no es algo que deba ser ganada o perdida, sino algo que debe ser comprendido.",
+      10: "El camino del guerrero es la vida misma. No puedes evitarlo. El verdadero desafío no es luchar con los demás, sino contigo mismo.",
+      11: "La verdadera maestría no está en la técnica, sino en el dominio de uno mismo.",
+      12: "El Señor sana a los quebrantados de corazón. (Salmo 147:3)",
+      13: "Un hombre fuerte no necesita levantar la espada, porque sabe que no necesita hacerlo.",
+      14: "No busques la paz fuera de ti, porque la paz no es un lugar, sino un estado mental.",
+      15: "Cree en ti mismo y todo será posible.",
+      16: "Tú eres más valioso de lo que piensas. No dejes que nada ni nadie te haga dudar de tu valor.",
+      17: "Deléitate en el Señor, y Él te concederá los deseos de tu corazón. (Salmo 37:4)",
+      18: "Cada vez que dudas de ti mismo, recuerda cuántas veces has superado lo que pensaste que no podías.",
+      19: "Espero y estas frases te ayuden. muchas gracias por todo, felices 19!!, pásala super bien :3"
+    };
+
+    // Show the corresponding psalm and update the text
+    function showPsalm() {
+      const input = document.getElementById("numberInput").value;
+      const promptText = document.getElementById("promptText");
+
+      if (psalms[input]) {
+        promptText.textContent = psalms[input];
+      } else {
+        promptText.textContent = "Por favor, elige un número entre 1 y 19.";
+      }
+    }
+  </script>
+</body>
+</html>
